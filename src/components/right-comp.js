@@ -27,6 +27,13 @@ export default function RightComponent() {
     tip = Number(tip.toFixed(2))
     let total_tip = (persons != 0)?(tip * persons):tip.toFixed(1)
     let total_amount = Number(bill_state) + Number(total_tip)
+
+    function reset() {
+        setBillstate(0)
+        setTip(0)
+        total_tip = 0
+        total_amount = 0
+    }
     return (
         <>
         <Tipbox>
@@ -51,7 +58,7 @@ export default function RightComponent() {
                     <Tipprice>${total_amount}</Tipprice>
                 </Tiptext>
             </TiptextFlex>
-            <Resetbutton>RESET</Resetbutton>
+            <Resetbutton onClick={reset}>RESET</Resetbutton>
         </Tipbox>
         </>
     )

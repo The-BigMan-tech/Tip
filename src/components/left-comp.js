@@ -28,7 +28,7 @@ const Custombutton = tw(Styledinput)`
 export const Totalbill = createContext('')
 export default function LeftComponent() {
     let [bill_state,setBillstate] = useState('')
-    let [tip,setTip] = useState(0)
+    let [tip,setTip] = useState('')
     let [custom_tip,setCustomtip] = useState('')
     let [persons,setPersons] = useState('')
     let [percents,setPercents] = useState({5:false,10:false,15:false,25:false,30:false})
