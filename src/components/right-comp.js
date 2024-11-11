@@ -15,8 +15,8 @@ const Tiptext = tw.div`
 const Tipprice = tw.div`
     text-4xl font-bold text-[#35bfb0] absolute right-16
 `
-const Resetbutton = tw.div`
-    bg-[#0d686d] flex items-center justify-center relative top-[22rem] h-12 w-80 left-4 border-2 border-transparent rounded-lg text-[#144f53]
+const Resetbutton = tw.button`
+    bg-[#0d686d] flex items-center justify-center relative top-[22rem] h-12 w-80 left-4 border-2 border-transparent rounded-lg text-[#144f53] hover:bg-[#9fe8df] hover:text-[#004846]
 `
 const Fade = tw.div`
     text-[#669a9d] text-sm

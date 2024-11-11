@@ -28,7 +28,6 @@ const Custombutton = tw(Styledinput)`
 export const Totalbill = createContext('')
 export default function LeftComponent() {
     let [bill_state,setBillstate] = useState('')
-    let [bill,setBill] = useState(0.00)
     let [tip,setTip] = useState(0)
     let [custom_tip,setCustomtip] = useState('')
     let [persons,setPersons] = useState('')
@@ -49,10 +48,10 @@ export default function LeftComponent() {
         setPercents(percents)
     }
     function customTip(event) {
-        setCustomtip(event.target.value)
+        setCustomtip(event.target.value);
     }
     function submitCustomtip(event){
-        ((event.key == 'Enter') && (bill_state>0))?setTip((custom_tip/100) * bill_state):null
+        ((event.key == 'Enter') && (bill_state>0))?setTip((custom_tip/100)):null
     }
     function watchpersons(event) {
         setPersons(event.target.value)
