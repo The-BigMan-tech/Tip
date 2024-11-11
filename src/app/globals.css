@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  color:white;
+  background:#c5e4e7;
+  font-family: Arial, Helvetica, sans-serif;
+  display:flex;
+  justify-content:center;
+}
+@font-face {
+ font-family: "SpaceMono";
+ src: local("SpaceMono-Bold"),
+  url("./fonts/SpaceMono-Bold.ttf") format("truetype");
+ font-weight: bold;
+}
