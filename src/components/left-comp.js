@@ -20,33 +20,45 @@ const Tips = tw.div`
 const Tipbutton = tw.button`
     bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f]
 `
-const Custombutton = tw(Tipbutton)`
-    bg-[#f0f7f9] text-[#697f7f] hover:border-2 hover:border-[#5aa79d] hover:bg-white
+const Custombutton = tw(Styledinput)`
+    bg-[#f0f7f9] text-[#697f7f] hover:border-2 hover:border-[#5aa79d] hover:bg-white w-24 h-16 border-2 border-transparent rounded-lg relative bottom-3 text-lg text-center
 `
 
 
 export const Totalbill = createContext('')
 export default function LeftComponent() {
-    let [bill,setBill] = useState('')
-    let [total_amount,setTotalamount] = useState(0.00)
-    
+    let [bill_state,setBillstate] = useState('')
+    let [bill,setBill] = useState(0.00)
     let [tip,setTip] = useState(0)
+    let [custom_tip,setCustomtip] = useState('')
+    let [persons,setPersons] = useState('')
+
+
     function watchbill(event) {
-        setBill(event.target.value)
+        setBillstate(Number(event.target.value))
     }
     function submitbill(event) {
-        (event.key == 'Enter')?setTotalamount(bill):null
+        (event.key == 'Enter')?setBill(bill_state):null
     }
     function submitTip(event) {
         let num = event.target.textContent.slice(0,-1)
-        setTip((num/100) * total_amount)
+        setTip((num/100) * bill)
+    }
+    function customTip(event) {
+        setCustomtip(event.target.value)
+    }
+    function submitCustomtip(event){
+        ((event.key == 'Enter') && (bill>0))?setTip((custom_tip/100) * bill):null
+    }
+    function watchpersons(event) {
+        setPersons(event.target.value)
     }
     
     return(
         <>
             <Left>
                 <h1>Bill</h1>
-                <Styledinput onChange={watchbill} onKeyDown = {submitbill} type="text" value={bill}/>
+                <Styledinput onChange={watchbill} onKeyDown = {submitbill} type="text" value={bill_state}/>
                 <Styledtip>
                     <h1>Select tip</h1>
                     <Tips>
@@ -55,14 +67,14 @@ export default function LeftComponent() {
                         <Tipbutton onClick={submitTip}>15%</Tipbutton>
                         <Tipbutton onClick={submitTip}>25%</Tipbutton>
                         <Tipbutton onClick={submitTip}>30%</Tipbutton>
-                        <Custombutton>Custom</Custombutton>
+                        <Custombutton onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
                     </Tips>
                 </Styledtip>
                 <Styledtip>
                     <h1>Number of people</h1>
-                    <Styledinput type="text"/>
+                    <Styledinput onChange={watchpersons} type="text" value={persons}/>
                 </Styledtip>
-                <Totalbill.Provider value={{total_amount,setTotalamount,tip,setTip}}>
+                <Totalbill.Provider value={{bill,setBill,tip,setTip,persons,setPersons}}>
                     <RightComponent/>
                 </Totalbill.Provider>
             </Left>
