@@ -13,11 +13,11 @@ const Styledtip = tw.div`
 const Tips = tw.div`
     flex w-96 flex-wrap mt-4 gap-x-7 gap-y-4
 `
-const Tipbutton = tw.div`
-    bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg
+const Tipbutton = tw.button`
+    bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f]
 `
 const Custombutton = tw(Tipbutton)`
-    bg-[#f0f7f9] text-[#697f7f]
+    bg-[#f0f7f9] text-[#697f7f] hover:border-2 hover:border-[#5aa79d] hover:bg-white
 `
 export default function LeftComponent() {
     return(
