@@ -18,7 +18,7 @@ const Tips = tw.div`
     flex w-96 flex-wrap mt-4 gap-x-7 gap-y-4
 `
 const Tipbutton = tw.button`
-    bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f] ${(props)=>(props.$isSelected == true)?'text-[#09524f] bg-[#a1e7df]':'text-white bg-[#00474b]'}
+    ${(props)=>(props.$isSelected == true)?'text-[#09524f] bg-[#a1e7df]':'text-white bg-[#00474b]'} bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f]
 `
 const Custombutton = tw(Styledinput)`
     bg-[#f0f7f9] text-[#697f7f] hover:border-2 hover:border-[#5aa79d] hover:bg-white w-24 h-16 border-2 border-transparent rounded-lg relative bottom-3 text-lg text-center
