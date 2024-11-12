@@ -56,6 +56,9 @@ export default function LeftComponent() {
     function watchpersons(event) {
         setPersons(event.target.value)
     }
+    function deselect() {
+        setPercents({})
+    }
     return(
         <>
             <Left>
@@ -69,7 +72,7 @@ export default function LeftComponent() {
                         <Tipbutton $isSelected={percents[15]} onClick={submitTip}>15%</Tipbutton>
                         <Tipbutton $isSelected={percents[25]} onClick={submitTip}>25%</Tipbutton>
                         <Tipbutton $isSelected={percents[30]} onClick={submitTip}>30%</Tipbutton>
-                        <Custombutton onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
+                        <Custombutton onFocus={deselect} onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
                     </Tips>
                 </Styledtip>
                 <Styledtip>
