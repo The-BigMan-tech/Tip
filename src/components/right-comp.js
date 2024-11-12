@@ -1,6 +1,6 @@
 'use client'
 import tw from 'tailwind-styled-components'
-import { Totalbill } from './left-comp'
+import { Context } from './left-comp'
 import {useContext} from 'react'
 
 const Tipbox = tw.div`
@@ -22,17 +22,15 @@ const Fade = tw.div`
     text-[#669a9d] text-sm
 `
 export default function RightComponent() {
-    let {bill,setBill,tip,setTip,persons,setPersons} = useContext(Totalbill)
-    tip = tip * bill
-    tip = Number(tip.toFixed(2))
-    let total_tip = (persons != 0)?(tip * persons):tip.toFixed(1)
-    let total_amount = Number(bill) + Number(total_tip)
+    let {bill,setBill,tip,setTip,people,setPeople} = useContext(Context)
+    bill = Number(Number(bill).toFixed(2))
+    tip = Number(((tip/100) * bill).toFixed(2))
+    let total_tip = Number(((people != 0)?(tip * people):tip).toFixed(2))//The condition check is to ensure that the total tip doesnt display zero just because the number of people is zero
+    let total_amount = Number((bill + total_tip).toFixed(2))
 
     function reset() {
         setBill(0)
         setTip(0)
-        total_tip = 0
-        total_amount = 0
     }
     return (
         <>

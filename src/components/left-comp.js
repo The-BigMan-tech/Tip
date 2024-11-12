@@ -16,7 +16,8 @@ const TipFlex = tw.div`
 const Tips = tw.div`
     flex w-96 flex-wrap mt-4 gap-x-7 gap-y-4
 `
-const Tipbutton = tw.button`
+//This one in particular has a styled prop to style it based on whether it is selected
+const TipButton = tw.button`
     bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f] ${(props)=>(props.$isSelected == true)?'text-[#09524f] bg-[#a1e7df]':'text-white bg-[#00474b]'}
 `
 const CustomTip = tw(StyledInput)`
@@ -24,63 +25,60 @@ const CustomTip = tw(StyledInput)`
 `
 
 
-export const Totalbill = createContext('')
+export const Context = createContext('')
 export default function LeftComponent() {
     let [bill,setBill] = useState('')
     let [tip,setTip] = useState('')
     let [custom_tip,setCustomtip] = useState('')
-    let [persons,setPersons] = useState('')
-    let [percents,setPercents] = useState({5:false,10:false,15:false,25:false,30:false})
+    let [selected_tips,setSelectedtips] = useState({5:false,10:false,15:false,25:false,30:false})
+    let [people,setPeople] = useState('')
 
-    function watchbill(event) {
-        setBill(Number(event.target.value))
-        console.log("PER:",percents)
+    function typeBill(event) {
+        setBill(event.target.value)
     }
     function submitTip(event) {
-        let num = event.target.textContent.slice(0,-1)
-        setTip((num/100))
-        for (let i in percents){
-            percents[i] = false
+        let num = event.target.textContent.slice(0,-1)//To only get the tip number and not with the % sign
+        for (let i in selected_tips){
+            selected_tips[i] = false
         }
-        percents[num] = true
-        console.log("PER:",percents)
-        setPercents(percents)
+        selected_tips[num] = true
+        setTip(num),setSelectedtips(selected_tips)
     }
-    function customTip(event) {
+    function typeCustomtip(event) {
         setCustomtip(event.target.value);
     }
     function submitCustomtip(event){
-        ((event.key == 'Enter') && (bill>0))?setTip((custom_tip/100)):null
+        ((event.key == 'Enter') && (bill>0))?setTip((custom_tip)):null
     }
-    function watchpersons(event) {
-        setPersons(event.target.value)
+    function typePeople(event) {
+        setPeople(event.target.value)
     }
     function deselect() {
-        setPercents({})
+        setSelectedtips({})
     }
     return(
         <>
             <LeftContainer>
                 <h1>Bill</h1>
-                <StyledInput onChange={watchbill} type="text" value={bill}/>
+                <StyledInput onChange={typeBill} type="text" value={bill}/>
                 <TipFlex>
                     <h1>Select tip</h1>
                     <Tips>
-                        <Tipbutton $isSelected={percents[5]} onClick={submitTip}>5%</Tipbutton>
-                        <Tipbutton $isSelected={percents[10]} onClick={submitTip}>10%</Tipbutton>
-                        <Tipbutton $isSelected={percents[15]} onClick={submitTip}>15%</Tipbutton>
-                        <Tipbutton $isSelected={percents[25]} onClick={submitTip}>25%</Tipbutton>
-                        <Tipbutton $isSelected={percents[30]} onClick={submitTip}>30%</Tipbutton>
-                        <CustomTip onFocus={deselect} onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
+                        <TipButton $isSelected={selected_tips[5]} onClick={submitTip}>5%</TipButton>
+                        <TipButton $isSelected={selected_tips[10]} onClick={submitTip}>10%</TipButton>
+                        <TipButton $isSelected={selected_tips[15]} onClick={submitTip}>15%</TipButton>
+                        <TipButton $isSelected={selected_tips[25]} onClick={submitTip}>25%</TipButton>
+                        <TipButton $isSelected={selected_tips[30]} onClick={submitTip}>30%</TipButton>
+                        <CustomTip onFocus={deselect} onChange={typeCustomtip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
                     </Tips>
                 </TipFlex>
                 <TipFlex>
                     <h1>Number of people</h1>
-                    <StyledInput onChange={watchpersons} type="text" value={persons}/>
+                    <StyledInput onChange={typePeople} type="text" value={people}/>
                 </TipFlex>
-                <Totalbill.Provider value={{bill,setBill,tip,setTip,persons,setPersons}}>
+                <Context.Provider value={{bill,setBill,tip,setTip,people,setPeople}}>
                     <RightComponent/>
-                </Totalbill.Provider>
+                </Context.Provider>
             </LeftContainer>
         </>
     )
