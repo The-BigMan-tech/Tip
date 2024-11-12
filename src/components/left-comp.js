@@ -1,17 +1,16 @@
 'use client'
 import tw from 'tailwind-styled-components'
-import styled from 'styled-components'
-import {useState,useEffect,createContext,useRef} from 'react'
+import {useState,createContext} from 'react'
 import RightComponent from './right-comp'
 
 //Dont forget about component did mount 
-const Left = tw.div`
+const LeftContainer = tw.div`
     flex flex-col absolute left-10 top-5 text-lg
 `
-const Styledinput = tw.input`
+const StyledInput = tw.input`
     bg-[#d9e5ec] mt-3 h-10 w-[21rem] text-end font-bold text-[#2f676b] text-2xl focus:bg-white focus:outline focus:outline-2 focus:outline-[#befff8]
 `
-const Styledtip = tw.div`
+const TipFlex = tw.div`
     flex flex-col relative top-9 text-lg mb-7 focus:border-green-200
 `
 const Tips = tw.div`
@@ -20,21 +19,21 @@ const Tips = tw.div`
 const Tipbutton = tw.button`
     bg-[#00474b] text-white w-24 h-16 flex items-center justify-center border-2 border-transparent rounded-lg hover:bg-[#a1e7df] hover:text-[#09524f] ${(props)=>(props.$isSelected == true)?'text-[#09524f] bg-[#a1e7df]':'text-white bg-[#00474b]'}
 `
-const Custombutton = tw(Styledinput)`
+const CustomTip = tw(StyledInput)`
     bg-[#f0f7f9] text-[#697f7f] hover:border-2 hover:border-[#5aa79d] hover:bg-white w-24 h-16 border-2 border-transparent rounded-lg relative bottom-3 text-lg text-center
 `
 
 
 export const Totalbill = createContext('')
 export default function LeftComponent() {
-    let [bill_state,setBillstate] = useState('')
+    let [bill,setBill] = useState('')
     let [tip,setTip] = useState('')
     let [custom_tip,setCustomtip] = useState('')
     let [persons,setPersons] = useState('')
     let [percents,setPercents] = useState({5:false,10:false,15:false,25:false,30:false})
 
     function watchbill(event) {
-        setBillstate(Number(event.target.value))
+        setBill(Number(event.target.value))
         console.log("PER:",percents)
     }
     function submitTip(event) {
@@ -51,7 +50,7 @@ export default function LeftComponent() {
         setCustomtip(event.target.value);
     }
     function submitCustomtip(event){
-        ((event.key == 'Enter') && (bill_state>0))?setTip((custom_tip/100)):null
+        ((event.key == 'Enter') && (bill>0))?setTip((custom_tip/100)):null
     }
     function watchpersons(event) {
         setPersons(event.target.value)
@@ -61,10 +60,10 @@ export default function LeftComponent() {
     }
     return(
         <>
-            <Left>
+            <LeftContainer>
                 <h1>Bill</h1>
-                <Styledinput onChange={watchbill} type="text" value={bill_state}/>
-                <Styledtip>
+                <StyledInput onChange={watchbill} type="text" value={bill}/>
+                <TipFlex>
                     <h1>Select tip</h1>
                     <Tips>
                         <Tipbutton $isSelected={percents[5]} onClick={submitTip}>5%</Tipbutton>
@@ -72,17 +71,17 @@ export default function LeftComponent() {
                         <Tipbutton $isSelected={percents[15]} onClick={submitTip}>15%</Tipbutton>
                         <Tipbutton $isSelected={percents[25]} onClick={submitTip}>25%</Tipbutton>
                         <Tipbutton $isSelected={percents[30]} onClick={submitTip}>30%</Tipbutton>
-                        <Custombutton onFocus={deselect} onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
+                        <CustomTip onFocus={deselect} onChange={customTip} onKeyDown={submitCustomtip} placeholder='Custom' type="text" value={custom_tip}/>
                     </Tips>
-                </Styledtip>
-                <Styledtip>
+                </TipFlex>
+                <TipFlex>
                     <h1>Number of people</h1>
-                    <Styledinput onChange={watchpersons} type="text" value={persons}/>
-                </Styledtip>
-                <Totalbill.Provider value={{bill_state,setBillstate,tip,setTip,persons,setPersons}}>
+                    <StyledInput onChange={watchpersons} type="text" value={persons}/>
+                </TipFlex>
+                <Totalbill.Provider value={{bill,setBill,tip,setTip,persons,setPersons}}>
                     <RightComponent/>
                 </Totalbill.Provider>
-            </Left>
+            </LeftContainer>
         </>
     )
 }

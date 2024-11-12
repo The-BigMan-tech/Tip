@@ -22,14 +22,14 @@ const Fade = tw.div`
     text-[#669a9d] text-sm
 `
 export default function RightComponent() {
-    let {bill_state,setBillstate,tip,setTip,persons,setPersons} = useContext(Totalbill)
-    tip = tip * bill_state
+    let {bill,setBill,tip,setTip,persons,setPersons} = useContext(Totalbill)
+    tip = tip * bill
     tip = Number(tip.toFixed(2))
     let total_tip = (persons != 0)?(tip * persons):tip.toFixed(1)
-    let total_amount = Number(bill_state) + Number(total_tip)
+    let total_amount = Number(bill) + Number(total_tip)
 
     function reset() {
-        setBillstate(0)
+        setBill(0)
         setTip(0)
         total_tip = 0
         total_amount = 0
@@ -40,7 +40,7 @@ export default function RightComponent() {
             <TiptextFlex>
                 <Tiptext>
                     <h1>Bill</h1>
-                    <Tipprice>${bill_state}</Tipprice>
+                    <Tipprice>${bill}</Tipprice>
                 </Tiptext>
                 <Tiptext>
                     <div>
